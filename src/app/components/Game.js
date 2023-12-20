@@ -32,7 +32,7 @@ export default function Game(props) {
   return (
     <>
       {wasSelected ? (
-        <div className="flex flex-col w-full items-center">
+        <div className="flex flex-col w-full items-center text-2xl">
           <div className="flex justify-between w-full my-20">
             <div className="flex flex-col items-center gap-2 relative">
               <OptionButton
@@ -44,7 +44,7 @@ export default function Game(props) {
               <div
                 className={`${
                   winner === "player1" ? "block" : "hidden"
-                } absolute top-[-136px] left[-136px] bg-winner -z-10 w-96 h-96`}
+                } absolute top-[-136px] left[-136px] bg-winner -z-10 w-96 h-96 sm:w-[600px] sm:h-[600px] sm:top-[-204px] sm:left[-204px]`}
               ></div>
             </div>
             <div className="flex flex-col items-center gap-2 relative">
@@ -57,7 +57,7 @@ export default function Game(props) {
               <div
                 className={`${
                   winner === "player2" ? "block" : "hidden"
-                } absolute top-[-136px] left[-136px] bg-winner -z-10 w-96 h-96`}
+                } absolute top-[-136px] left[-136px] bg-winner -z-10 w-96 h-96 sm:w-[600px] sm:h-[600px] sm:top-[-204px] sm:left[-204px]`}
               ></div>
             </div>
           </div>
@@ -72,8 +72,8 @@ export default function Game(props) {
           </div>
         </div>
       ) : (
-        <div className="gap-8 w-80 h-64 flex flex-col items-center bg-[url(/bg-triangle.svg)]  bg-no-repeat bg-[length:50%] bg-center my-10 ">
-          <div className="flex gap-20 justify-center">
+        <div className="gap-8 sm:gap-24 w-80 h-64 flex flex-col items-center bg-[url(/bg-triangle.svg)]  bg-no-repeat bg-[length:50%] bg-center my-10 sm:pt-9 sm:bg-[length:70%] sm:w-[600px] sm:h-[600px]">
+          <div className="flex gap-20 sm:gap-32 justify-center">
             <OptionButton
               setWasSelected={setWasSelected}
               setOptions={setOptions}

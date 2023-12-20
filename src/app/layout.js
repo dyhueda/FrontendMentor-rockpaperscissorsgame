@@ -11,7 +11,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${barlow.className} bg-background max-w-screen h-screen p-6 text-white -z-20`}>{children}</body>
+      <body className={`${barlow.className} bg-background max-w-screen h-screen  text-white -z-20`}>
+        <div className="max-w-screen h-screen -z-20 justify-center p-6 flex">
+        {children}
+        </div>
+        </body>
     </html>
   )
 }

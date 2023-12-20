@@ -7,12 +7,12 @@ import Image from "next/image";
 
 export default function cpuPage() {
   const [showRule, setShowRule] = useState(false);
-  const [points, setPoints] = useState(0)
+  const [points, setPoints] = useState(0);
   return (
-    <div className="items-center flex flex-col h-full">
+    <div className="items-center flex flex-col h-full sm:w-1/2">
       <Score points={points} />
-      <Game type={"CPU"} setPoints={setPoints} points={points}/>
-      <div className="w-fit h-full flex flex-col-reverse mb-20">
+      <Game type={"CPU"} setPoints={setPoints} points={points} />
+      <div className="sm:absolute sm:h-fit sm:bottom-0 sm:right-20 w-fit h-full flex flex-col-reverse mb-20">
         <Button
           title={"RULES"}
           transparent={true}
@@ -21,22 +21,30 @@ export default function cpuPage() {
           }}
         />
       </div>
-      {showRule && 
-      <div className="p-5 absolute top-0 bg-white w-full h-full flex flex-col items-center">
-      <h1 className="text-darkText font-bold text-3xl my-24">RULES</h1>
-      <Image
-      src={"/image-rules.svg"}
-      width={500}
-      height={500}
-      alt="Image of the rules"
-      />
-      <button onClick={()=>setShowRule(false)} className="mt-24"><Image
-      src={"/icon-close.svg"}
-      width={24}
-      height={24}
-      alt="X icon"
-      /></button>
-      </div>}
+      {showRule && (
+        <div className="p-5 absolute top-0 bg-white w-full h-full flex flex-col items-center sm:w-1/4 sm:h-1/2 sm:top-1/4 sm:justify-around sm:rounded-md sm:items-start">
+          <h1 className="text-darkText font-bold text-3xl my-24 sm:m-0 sm:mb-10">
+            RULES
+          </h1>
+          <Image
+            src={"/image-rules.svg"}
+            width={500}
+            height={500}
+            alt="Image of the rules"
+          />
+          <button
+            onClick={() => setShowRule(false)}
+            className="mt-24 sm:m-0 sm:absolute sm:top-6 sm:right-6 "
+          >
+            <Image
+              src={"/icon-close.svg"}
+              width={24}
+              height={24}
+              alt="X icon"
+            />
+          </button>
+        </div>
+      )}
     </div>
   );
 }
