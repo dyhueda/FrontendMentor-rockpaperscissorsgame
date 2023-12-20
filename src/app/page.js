@@ -12,8 +12,9 @@ export default function Home() {
         <Image src="/logo.svg" width={750} height={750} alt="Logo image" />
         <div className="flex flex-col h-full w-full gap-5 mt-10 sm:w-1/3 sm:gap-10">
           <Button title="Vs CPU" onClick={() => router.push("/CPU")} />
-          <Button title="Vs Player" onClick={() => router.push("/Player")} />
-          <Button title="Bonus Game" onClick={() => router.push("Bonus")} />
+          <Button title="Vs Player Local" onClick={() => router.push("/Local")} />
+          <Button title="Vs Player Online (Comming soon...)" onClick={() => router.push("")} />
+          <Button title="Bonus Game (Comming soon...)" onClick={() => router.push("")} />
         </div>
       </div>
     </main>

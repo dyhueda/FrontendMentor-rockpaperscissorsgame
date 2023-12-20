@@ -2,7 +2,6 @@ export function GetWinner(array){
   if(array.length == 2){
     const player1 = array[0];
     const player2 = array[1];
-    console.log(player1, player2)
     if(player1 == player2){
     return "draw"
     }

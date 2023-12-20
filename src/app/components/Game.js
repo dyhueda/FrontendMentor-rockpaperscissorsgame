@@ -3,32 +3,56 @@
 import { useEffect, useState } from "react";
 import OptionButton from "./OptionButton";
 import { CPUplay, GetWinner } from "../utils/Game";
-import Image from "next/image";
 import Button from "./Button";
-import { useRouter } from "next/navigation";
 export default function Game(props) {
   const [options, setOptions] = useState([]);
   const [winner, setWinner] = useState();
   const [wasSelected, setWasSelected] = useState(false);
-  const router = useRouter()
-  const setPoints = props.setPoints
-  const points = props.points
+  const [player, setPlayer] = useState("Player 1");
+  const setPlayer1Points = props.setPlayer1Points;
+  const player1Points = props.player1Points;
+  const setPlayer2Points = props.setPlayer2Points;
+  const player2Points = props.player2Points;
+  const type = props.type;
+
   useEffect(() => {
-    if (options.length == 1) {
-      const cpu = CPUplay();
-      setOptions([...options, cpu]);
-      const winner = GetWinner([options[0], cpu])
-      setWinner(winner);
-      if(winner === "player1"){
-        setPoints(points + 1)
+    if (type === "CPU") {
+      if (options.length == 1) {
+        const cpu = CPUplay();
+        setOptions([...options, cpu]);
+        const winner = GetWinner([options[0], cpu]);
+        setWinner(winner);
+        setWasSelected(true);
+        if (winner === "player1") {
+          setPlayer1Points(player1Points + 1);
+        }
+      }
+    }
+    if (type === "Local") {
+      if (options.length === 1) {
+        setPlayer("Player 2");
+      }
+      if (options.length === 2) {
+        const winner = GetWinner(options);
+        setWinner(winner);
+        setWasSelected(true)
+        if(winner === "player1"){
+          setPlayer1Points(player1Points + 1)
+        }
+        if(winner === "player2"){
+          setPlayer2Points(player2Points + 1)
+        }
       }
     }
   }, [options]);
-  const handlePlayAgain = () =>{
-    setWinner()
-    setWasSelected(false)
+
+  const handlePlayAgain = () => {
+    setWinner();
+    setWasSelected(false);
     setOptions([]);
-  }
+    setPlayer("Player 1")
+  };
+
   return (
     <>
       {wasSelected ? (
@@ -40,7 +64,7 @@ export default function Game(props) {
                 color={`bg-${options[0]}Gradient`}
                 title={options[0]}
               />
-              <p>YOU PICKED</p>
+              <p>{type === "CPU" && "YOU PICKED"}{type === "Local" && "PLAYER 1 PICKED"}</p>
               <div
                 className={`${
                   winner === "player1" ? "block" : "hidden"
@@ -53,7 +77,7 @@ export default function Game(props) {
                 color={`bg-${options[1]}Gradient`}
                 title={options[1]}
               />
-              <p>THE HOUSE PICKED</p>
+              <p>{type === "CPU" && "THE HOUSE PICKED"}{type === "Local" && "PLAYER 2 PICKED"}</p>
               <div
                 className={`${
                   winner === "player2" ? "block" : "hidden"
@@ -63,42 +87,46 @@ export default function Game(props) {
           </div>
           <div className="w-2/3 flex flex-col items-center gap-5">
             <h1 className=" text-6xl font-medium">
-            {winner==="player1"&& "YOU WIN"}
-            {winner==="player2"&& "YOU LOSE"}
-            {winner==="draw"&& "DRAW"}
+              {winner === "player1" && type === "CPU" && "YOU WIN"}
+              {winner === "player2" && type === "CPU" && "YOU LOSE"}
+              {winner === "player1" && type === "Local" && "PLAYER 1 WIN"}
+              {winner === "player2" && type === "Local" && "PLAYER 2 WIN"}
+              {winner === "draw" && "DRAW"}
             </h1>
 
             <Button title={"PLAY AGAIN"} onClick={handlePlayAgain} />
           </div>
         </div>
       ) : (
-        <div className="gap-8 sm:gap-24 w-80 h-64 flex flex-col items-center bg-[url(/bg-triangle.svg)]  bg-no-repeat bg-[length:50%] bg-center my-10 sm:pt-9 sm:bg-[length:70%] sm:w-[600px] sm:h-[600px]">
-          <div className="flex gap-20 sm:gap-32 justify-center">
+        <div className="items-center flex flex-col">
+          {type === "Local" && (
+            <h1 className="text-3xl font-bold pt-4 sm:text-5xl">{player}</h1>
+          )}
+          <div className="gap-8 sm:gap-24 w-80 h-64 flex flex-col items-center bg-[url(/bg-triangle.svg)]  bg-no-repeat bg-[length:50%] bg-center my-10 sm:pt-9 sm:bg-[length:70%] sm:w-[600px] sm:h-[600px]">
+            <div className="flex gap-20 sm:gap-32 justify-center">
+              <OptionButton
+                setOptions={setOptions}
+                options={options}
+                src={"icon-paper.svg"}
+                color={"bg-paperGradient"}
+                title={"paper"}
+              />
+              <OptionButton
+                setOptions={setOptions}
+                options={options}
+                src={"icon-scissors.svg"}
+                color={"bg-scissorsGradient"}
+                title={"scissors"}
+              />
+            </div>
             <OptionButton
-              setWasSelected={setWasSelected}
               setOptions={setOptions}
               options={options}
-              src={"icon-paper.svg"}
-              color={"bg-paperGradient"}
-              title={"paper"}
-            />
-            <OptionButton
-              setWasSelected={setWasSelected}
-              setOptions={setOptions}
-              options={options}
-              src={"icon-scissors.svg"}
-              color={"bg-scissorsGradient"}
-              title={"scissors"}
+              src={"icon-rock.svg"}
+              color={"bg-rockGradient"}
+              title={"rock"}
             />
           </div>
-          <OptionButton
-            setWasSelected={setWasSelected}
-            setOptions={setOptions}
-            options={options}
-            src={"icon-rock.svg"}
-            color={"bg-rockGradient"}
-            title={"rock"}
-          />
         </div>
       )}
     </>
